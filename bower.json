@@ -1,0 +1,25 @@
+{
+  "name": "nodeServer",
+  "version": "0.0.1",
+  "homepage": "https://github.com/roscorcoran/securipiserver",
+  "authors": [
+    "ros <roscorcoran@gmail.com>"
+  ],
+  "description": "securipi",
+  "main": "myServer.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.1.1",
+    "momentjs": "~2.6.0",
+    "angular": "~1.2.16",
+    "angular-route": "~1.2.16"
+  }
+}

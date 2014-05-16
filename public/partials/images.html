@@ -1,0 +1,33 @@
+<h1 class="page-header">Gallery</h1>
+
+<div class="row">
+  <div class="col-xs-6 col-sm-6" ng-repeat="image in images">
+    <img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />
+    <h4>{{ image.title }}</h4>
+    <span class="text-muted">{{ image.ts | date: 'medium' }}</span>
+  </div>
+</div>
+
+<h2 class="sub-header">Section title</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Header</th>
+        <th>Header</th>
+        <th>Header</th>
+        <th>Header</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1,001</td>
+        <td>Lorem</td>
+        <td>ipsum</td>
+        <td>dolor</td>
+        <td>sit</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
