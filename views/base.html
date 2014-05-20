@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
-<html lang="en" ng-app="myApp" class="no-js">
+<!--[if lt IE 7]>      <html lang="en" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js lt-ie9"> <![endif]-->
+<html lang="en" class="no-js">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,6 +10,8 @@
 <title>Securipi - {{ title|'Security' }}</title>
 <link href="../public/components/bootstrap/dist/css/bootstrap.min.css" media="all" rel="stylesheet" type="text/css" />
 <link href="../public/css/dashboard.css" media="all" rel="stylesheet" type="text/css" />
+{% block head %}
+{% endblock %}
 
 </head>
 <body>
@@ -28,6 +30,9 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/dashboard">Dashboard</a></li>
           <li><a href="/dashboard/images">Images</a></li>
+          <li><a href="/login">Login</a></li>
+          <li><a href="/logout">Logout</a></li>
+          {#Add login/out here#}
         </ul>
         <form class="navbar-form navbar-right">
           <input type="text" class="form-control" placeholder="Search...">
@@ -35,12 +40,8 @@
       </div>
     </div>
   </div>
-
 {% block content %}
-
 {% endblock %}
-
-
 <script src="../public/components/angular/angular.js"></script>
 <script src="../public/components/angular-route/angular-route.js"></script>
 <script src="../public/components/jquery/dist/jquery.js"></script>
