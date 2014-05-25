@@ -22,12 +22,12 @@ var MongooseOptions = {
   //user: 'ros',
   //pass: 'blaz1ng',
   //auth:{authdb:"admin"}
-}
+};
 mongoose.connect('mongodb://localhost/securipi',MongooseOptions);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  //var gfs = Grid(conn.db, mongoose.mongo);
+  var gfs = new Grid(db.db, mongoose.mongo);
   console.log('DB up!');// yay!
 });
 
@@ -62,15 +62,7 @@ app.set('view cache', false);
 var server = http.createServer(app);
 
 
-var picSchema = new Schema({
-    title: { type: String, default: 'Title' },
-    pic: String,
-    ts: { type: Date, default: Date.now },
-    seen: { type: Boolean, default: false },
-    starred: { type: Boolean, default: false }
-});
 
-var Image = mongoose.model('Image', picSchema);
 
 //Passport config options
 var Account = require('./models/account');
@@ -107,7 +99,7 @@ passport.deserializeUser(function(id, done) {
 });
 */
 
-require('./routes/routes.js')(app, passport, Image);
+require('./routes/routes.js')(app, passport);
 
 
 
