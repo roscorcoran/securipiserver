@@ -11,8 +11,6 @@ function userAuthenticated(req, res, next){
 module.exports = function(app, passport) {
 //var Account = require('./models/account');
 var Image = require('../models/image');
-//var Account = require('.../models/account');
-//Account.register(new Account({ username : 'ros' }), 'test', function(err, account) {console.log(err);});
   // Routes
   //Login
   app.post('/login',
