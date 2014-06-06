@@ -50,18 +50,29 @@ var Image = require('../models/image');
         title: 'Images'
       });
   });
-
+//IMAGES API
   app.get('/api/images', function(req, res) {
       console.log("GET images api");
-      Image.find({}, function (err, images) {
+      if(req.param("from") && req.param("to")){
+        var from = parseInt(req.param("from"));
+        var to = parseInt(req.param("to"));
+        Image.find({ "ts": {"$gt" : from, "$lt" : to}}, function (err, images) {
           if (err){
             return handleError(err);
           }
           res.send(JSON.stringify(images));
-    });
+        });
+      }else{
+        Image.find({}, function (err, images) {
+          if (err){
+            return handleError(err);
+          }
+          res.send(JSON.stringify(images));
+        });
+      }
   });
   app.get('/api/images/:_id', function(req, res) {
-      console.log("GET images api");
+      console.log("GET images api by ID");
       Image.findOne({_id: req.param("_id")}, function (err, image) {
           if (err){
             return handleError(err);

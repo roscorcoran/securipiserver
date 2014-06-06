@@ -1,12 +1,57 @@
 <h1 class="page-header">Gallery</h1>
+		<div class="row">
+			<div class="col-md-3 col-sm-12">
+				<div class="input-group input-group-sm">
+				  <span class="input-group-addon">
+					  <i class="glyphicon glyphicon-search"></i>
+				  </span>
+				  <input type="text" ng-model="image_search" class="form-control" placeholder="Search Posts">
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-4">
+				<div class="dropdown">
+					<a class="dropdown-toggle my-toggle-select" id="select-from" role="button" data-toggle="dropdown" >
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input type="datetime" class="form-control" value="{{ from | date:'HH:mm:ss dd/MM/yyyy' }}" placeholder="From" readonly>
+						</div>
+					</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<datetimepicker data-ng-model="from" on-set-time="onTimeSet" data-datetimepicker-config="{ dropdownSelector: '#select-from' }"></datetimepicker>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-4">
+				<div class="dropdown">
+					<a class="dropdown-toggle my-toggle-select" id="select-to" role="button" data-toggle="dropdown" >
+						<div class="input-group input-group-sm">
+							<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+							<input type="datetime" class="form-control" value="{{ to | date:'HH:mm:ss dd/MM/yyyy' }}" placeholder="To" readonly>
+						</div>
+					</a>
+					<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+						<datetimepicker data-ng-model="to" on-set-time="onTimeSet" data-datetimepicker-config="{ dropdownSelector: '#select-to' }"></datetimepicker>
+					</ul>
+				</div>
+			</div>
+			<div class="col-md-2 col-sm-3">
+				<select class="form-control input-sm" id="action-choice" ng-model="preset" ng-change="setPeriod()" ng-options="preset.name for preset in presets">
+						<option value="">-Choose Preset-</option>
+				</select>
+			</div>
+			<div class="col-md-1 col-sm-1">
+					<a type="button" href="" class="btn btn-primary btn-sm pull-right" ng-click="getBetween()">Go!</a>
+			</div>
+    </div>
+<h2 class="sub-header">Images</h2>
+    <div class="row">
+      <div class="col-xs-6 col-sm-6" ng-repeat="image in images">
+        <img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />
+        <h4>{{ image.title }}</h4>
+        <span class="text-muted">{{ image.ts | date: 'medium' }}</span>
+      </div>
+    </div>
 
-<div class="row">
-  <div class="col-xs-6 col-sm-6" ng-repeat="image in images">
-    <img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />
-    <h4>{{ image.title }}</h4>
-    <span class="text-muted">{{ image.ts | date: 'medium' }}</span>
-  </div>
-</div>
 
 <h2 class="sub-header">Section title</h2>
 <div class="table-responsive">

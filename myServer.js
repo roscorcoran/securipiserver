@@ -41,7 +41,7 @@ app.use(bodyParser({limit: '50mb'}));
 //app.use(express.urlencoded()); // to support URL-encoded bodies
 app.use(cookieParser());
 //used by passport
-app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 60000 }}));
+app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 600000 }}));
 //Not sure!
 //app.use(app.router);
 
