@@ -104,6 +104,6 @@ require('./routes/routes.js')(app, passport);
 
 
 
-app.listen(port,"192.168.0.12", function(){
+app.listen(port,"0.0.0.0", function(){
     console.log('Express server listening on port ' + port);
 });
