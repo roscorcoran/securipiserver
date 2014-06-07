@@ -66,12 +66,11 @@ var server = http.createServer(app);
 
 //Passport config options
 var Account = require('./models/account');
-//Register the default account
-//Account.register(new Account({ username : 'ros' }), 'test', function(err, account) {console.log(err);});
 passport.use(new LocalStrategy(Account.authenticate()));
 passport.serializeUser(Account.serializeUser());
 passport.deserializeUser(Account.deserializeUser());
-
+//Register the default account
+//Account.register(new Account({ username : 'ros' }), 'test', function(err, account) {console.log(err);});
 
 /*
 passport.use(new LocalStrategy(
