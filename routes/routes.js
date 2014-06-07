@@ -11,6 +11,7 @@ function userAuthenticated(req, res, next){
 module.exports = function(app, passport) {
 //var Account = require('./models/account');
 var Image = require('../models/image');
+
   // Routes
   //Login
   app.post('/login',
@@ -69,6 +70,16 @@ var Image = require('../models/image');
           res.send(JSON.stringify(images));
         });
       }
+  });
+  app.get('/api/images_metadata', function(req, res) {
+      console.log("GET images api meta");
+      Image.find({}).select('_id ts title seen starred').exec(
+        function (err, imagesmeta) {
+          if (err){
+            return handleError(err);
+          }
+          res.send(JSON.stringify(imagesmeta));
+        });
   });
   app.get('/api/images/:_id', function(req, res) {
       console.log("GET images api by ID");

@@ -55,7 +55,7 @@ module.exports = function(grunt) {
       files: ['test/**/*_test.js'],
     },
     jshint: {
-      src: ['myServer.js', 'Gruntfile.js', 'models/**/*.js', 'routes/**/*.js'],
+      src: ['myServer.js', 'Gruntfile.js', 'models/*.js', 'routes/*.js'],
       options: {
         node: true,
         devel:true,
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
     },
     watch: {
       express: {
-        files:  [ '**/*.js', 'myServer.js', 'Gruntfile.js', 'models/**/*.js', 'routes/**/*.js' ],
+        files:  [ 'myServer.js', 'Gruntfile.js', 'models/*.js', 'routes/*.js' ],
         tasks:  [ 'express:dev' ],
         options: {
           spawn: false // for grunt-contrib-watch v0.5.0+, "nospawn: true" for lower versions. Without this option specified express won't be reloaded

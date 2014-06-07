@@ -1,0 +1,8 @@
+<h1 class="page-header">Gallery</h1>
+<div class="row">
+  <div class="col-xs-12 col-sm-12">
+    <img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />
+    <h4>{{ image.ts | date: 'medium' }}</h4>
+    <span class="text-muted">{{ image.title }} - Starred: {{ image.starred }} - Seen: {{ image.starred }}</span>
+  </div>
+</div>

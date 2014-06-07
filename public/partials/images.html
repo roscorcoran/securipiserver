@@ -40,39 +40,14 @@
 				</select>
 			</div>
 			<div class="col-md-1 col-sm-1">
-					<a type="button" href="" class="btn btn-primary btn-sm pull-right" ng-click="getBetween()">Go!</a>
+					<a type="button" href="" class="btn btn-primary btn-sm pull-right" ng-click="refresh()">Go!</a>
 			</div>
     </div>
 <h2 class="sub-header">Images</h2>
-    <div class="row">
-      <div class="col-xs-6 col-sm-6" ng-repeat="image in images">
-        <img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />
-        <h4>{{ image.title }}</h4>
-        <span class="text-muted">{{ image.ts | date: 'medium' }}</span>
-      </div>
+  <div class="row">
+    <div class="col-xs-3 col-sm-3" ng-repeat="imagemeta in imagesmeta | orderBy:'ts':true" ng-click="go('/images/'+imagemeta._id)">
+      <!--<img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />-->
+      <h4>{{ imagemeta.ts | date: 'medium' }}</h4>
+      <span class="text-muted">{{ imagemeta.title }} - Star: {{ imagemeta.starred }} - Seen: {{ imagemeta.starred }}</span>
     </div>
-
-
-<h2 class="sub-header">Section title</h2>
-<div class="table-responsive">
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Header</th>
-        <th>Header</th>
-        <th>Header</th>
-        <th>Header</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1,001</td>
-        <td>Lorem</td>
-        <td>ipsum</td>
-        <td>dolor</td>
-        <td>sit</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+  </div>
