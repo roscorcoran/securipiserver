@@ -1,8 +1,8 @@
 <h1 class="page-header">Gallery</h1>
 <div class="row">
   <div class="col-xs-12 col-sm-12">
-    <img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />
+    <img class='img-responsive' alt='{{ image_metadata.metadata.main_id }}' ng-src='/api/images/{{ image_metadata.metadata.main_id }}' />
     <h4>{{ image.ts | date: 'medium' }}</h4>
-    <span class="text-muted">{{ image.title }} - Starred: {{ image.starred }} - Seen: {{ image.starred }}</span>
+    <span class="text-muted">{{ image_metadata._id }} - Starred: {{ image_metadata.metadata.starred }} - Seen: {{ image_metadata.metadata.starred }}</span>
   </div>
 </div>

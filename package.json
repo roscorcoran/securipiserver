@@ -17,6 +17,11 @@
     "grunt-contrib-nodeunit": "^0.4.0",
     "grunt-contrib-jshint": "^0.10.0",
     "grunt-contrib-watch": "^0.6.1",
-    "moment": "^2.6.0"
+    "moment": "^2.6.0",
+    "multipart": "^0.1.5",
+    "connect-multiparty": "^1.0.5",
+    "multiparty": "^3.2.8",
+    "util": "^0.10.3",
+    "imagemagick": "^0.1.3"
   }
 }

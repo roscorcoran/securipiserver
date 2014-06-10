@@ -43,9 +43,9 @@ angular.module('myApp.controllers', [])
   }])
   .controller('ImageDetail', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
 
-      $http.get('/api/images/'+$routeParams._id).success(function(response) {
-        $scope.image = response;
-        console.log('done loading image')
+      $http.get('/api/images_metadata/'+$routeParams._id).success(function(response) {
+        $scope.image_metadata = response;
+        console.log('done loading image meta')
       });
 
 

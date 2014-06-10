@@ -2,9 +2,14 @@ var port = process.env.PORT || 8080;
 var express = require('express');
 //Express extras
 var bodyParser = require('body-parser');
-var http = require('http');
+var multiparty = require('multiparty')
+  , http = require('http')
+  , util = require('util')
+
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+
+
 
 //Passport
 var passport = require('passport');
@@ -25,9 +30,11 @@ var MongooseOptions = {
 };
 mongoose.connect('mongodb://localhost/securipi',MongooseOptions);
 var db = mongoose.connection;
+var gfs = new Grid(db.db, mongoose.mongo);
+
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function callback () {
-  var gfs = new Grid(db.db, mongoose.mongo);
+
   console.log('DB up!');// yay!
 });
 
@@ -44,6 +51,8 @@ app.use(cookieParser());
 app.use(session({ secret: 'keyboard cat', cookie: { maxAge: 600000 }}));
 //Not sure!
 //app.use(app.router);
+//app.use(connect.multipart({ uploadDir: path }));
+
 
 //Passport
 app.use(passport.initialize());
@@ -100,7 +109,7 @@ passport.deserializeUser(function(id, done) {
 });
 */
 
-require('./routes/routes.js')(app, passport);
+require('./routes/routes.js')(app, passport, multiparty, gfs);
 
 
 

@@ -45,9 +45,9 @@
     </div>
 <h2 class="sub-header">Images</h2>
   <div class="row">
-    <div class="col-xs-3 col-sm-3" ng-repeat="imagemeta in imagesmeta | orderBy:'ts':true" ng-click="go('/images/'+imagemeta._id)">
-      <!--<img class='img-responsive' alt='{{ image.title }}' id='base64image' src='data:image/jpeg;charset=utf-8;base64,{{image.pic}}' />-->
-      <h4>{{ imagemeta.ts | date: 'medium' }}</h4>
-      <span class="text-muted">{{ imagemeta.title }} - Star: {{ imagemeta.starred }} - Seen: {{ imagemeta.starred }}</span>
+    <div class="col-xs-3 col-sm-3" ng-repeat="imagemeta in imagesmeta | orderBy:'uploadDate':true" ng-click="go('/images/'+imagemeta._id)">
+      <img class='img-responsive' alt='{{ imagemeta._id }}' ng-src='/api/images/thumbnails/{{ imagemeta._id }}' />
+      <h4>{{ imagemeta.uploadDate | date: 'medium' }}</h4>
+      <span class="text-muted">{{ imagemeta.length }} Bytes - Star: {{ imagemeta.metadata.starred }} - Seen: {{ imagemeta.metadata.starred }}</span>
     </div>
   </div>
