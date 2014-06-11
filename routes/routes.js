@@ -195,7 +195,7 @@ var im = require('imagemagick');
         });
 
         writestream.on('close', function (file) {
-          // do something with `file`
+          //use file object to insert id
           //console.log('FILE ID: ' + file._id);
           //console.log(util.inspect(file));
           im.resize({
