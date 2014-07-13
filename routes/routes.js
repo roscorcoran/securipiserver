@@ -234,16 +234,27 @@ var im = require('imagemagick');
   });
 
   //Add thumb deletion
-  app.delete('/api/images/:_id', function(req, res) {
+  app.delete('/api/images/:main_id/:thumb_id', function(req, res) {
     console.log("DELETE images api");
     var options = {
       mode: 'w',
       root: 'image_store',
-      _id: req.param("_id")
+      _id: req.param("main_id")
     };
     gfs.remove(options, function (err) {
       if (err) return handleError(err);
-      console.log('delete success');
+      console.log('main delete success');
+      var options = {
+        mode: 'w',
+        root: 'thumb_store',
+        _id: req.param("thumb_id")
+      };
+      gfs.remove(options, function (err) {
+        if (err) return handleError(err);
+        console.log('thumb delete success');
+        res.writeHead(200, {'content-type': 'text/plain'});
+        res.end('deleted');
+      });
     });
   });
 

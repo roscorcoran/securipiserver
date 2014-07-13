@@ -1,3 +1,24 @@
+ <script type="text/ng-template" id="myModalContent.html">
+  <div class="modal-header">
+	<div class="btn-group-sm pull-right">
+	<button type="button" class="btn btn-sm" ng-click="close()"><span class="glyphicon glyphicon-minus"></span></button>
+	</div>
+    <h4>{{ imageMeta.uploadDate | date: 'medium' }}</h4>
+
+  </div>
+  <div class="modal-body">
+		<img class='img-responsive' alt='{{ imageMeta.metadata.main_id }}' ng-src='/api/images/{{ imageMeta.metadata.main_id }}' />
+		<h4>{{ imageMeta.uploadDate | date: 'medium' }}</h4>
+		<span class="text-muted">{{ imageMeta._id }} - Starred: {{ imageMeta.metadata.starred }} - Seen: {{ imageMeta.metadata.starred }}</span>
+  </div>
+  <div class="modal-footer">
+		<div class="btn-group-sm pull-right">
+			<button type="button" class="btn btn-sm" ng-click="star(imageMeta._id)"><span class="glyphicon glyphicon-star"></span></button>
+			<button type="button" class="btn btn-sm" ng-click="remove(imageMeta,$index)"><span class="glyphicon glyphicon-trash"></span></button>
+			<button type="button" class="btn btn-sm" ng-click="close()"><span class="glyphicon glyphicon-minus"></span></button>
+		</div>
+  </div>
+</script>
 <h1 class="page-header">Gallery</h1>
 		<div class="row">
 			<div class="col-md-3 col-sm-12">
@@ -45,9 +66,18 @@
     </div>
 <h2 class="sub-header">Images</h2>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3 " ng-repeat="imagemeta in imagesmeta | orderBy:'uploadDate':true" ng-click="go('/images/'+imagemeta._id)">
-      <img class='img-responsive' alt='{{ imagemeta._id }}' ng-src='/api/images/thumbnails/{{ imagemeta._id }}' />
-      <h4>{{ imagemeta.uploadDate | date: 'medium' }}</h4>
-      <span class="text-muted">{{ imagemeta.length }} Bytes - Star: {{ imagemeta.metadata.starred }} - Seen: {{ imagemeta.metadata.starred }}</span>
+    <div class="col-xs-12 col-sm-6 col-md-3 " ng-repeat="imageMeta in imagesMeta" >
+			<div class="img-overlay">
+      	<img class='img-responsive' alt='{{ imageMeta._id }}' ng-src='/api/images/thumbnails/{{ imageMeta._id }}'/>
+				<div class="project-overlay btn-group-xs pull-right">
+					<button type="button" class="btn btn-xs" ng-click="star(imageMeta._id)"><span class="glyphicon glyphicon-star"></span></button>
+					<button type="button" class="btn btn-xs" ng-click="remove(imageMeta,$index)"><span class="glyphicon glyphicon-trash"></span></button>
+					<button type="button" class="btn btn-xs" ng-click="view(imageMeta)"><span class="glyphicon glyphicon-fullscreen"></span></button>
+				</div>
+			</div>
+			<div>
+	      <h4>{{ imageMeta.uploadDate | date: 'medium' }}</h4>
+	      <span class="text-muted">{{ imageMeta.length }} Bytes - Star: {{ imageMeta.metadata.starred }} - Seen: {{ imageMeta.metadata.starred }}</span>
+			</div>
     </div>
   </div>

@@ -3,7 +3,7 @@
 /* Controllers */
 
 angular.module('myApp.controllers', [])
-  .controller('ImageCtrl', ['$scope','$http','$location', function($scope,$http,$location) {
+  .controller('ImageCtrl', ['$scope','$http','$location','$modal', function($scope,$http,$location,$modal) {
     $scope.presets = [
       {name: 'Last 2 Hrs', mode:'realtime', range:[moment().subtract('hours', 2),moment()]},
       {name: 'Today', mode:'realtime', range:[moment().startOf('day'),moment().endOf('day')]},
@@ -23,7 +23,12 @@ angular.module('myApp.controllers', [])
         'to': moment($scope.to).valueOf()
       };
       $http.get('/api/images_metadata', {params: request}).success(function(response) {
-        $scope.imagesmeta = response;
+        response.sort(function(a, b) {
+          a = new Date(a.uploadDate);
+          b = new Date(b.uploadDate);
+          return a>b ? -1 : a<b ? 1 : 0;
+        });
+        $scope.imagesMeta = response;
         console.log('done loading images meta')
       });
     };
@@ -38,15 +43,67 @@ angular.module('myApp.controllers', [])
       $location.path( path );
       console.log('going to '+path);
     };
+    $scope.remove = function (imageMeta, index) {
+      console.log(JSON.stringify(imageMeta));
+      $http.delete('/api/images/'+imageMeta.metadata.main_id+'/'+imageMeta._id).success(function(response) {
+        //console.log(JSON.stringify(response));
+        if(response=='deleted'){
+          console.log('removing:',imageMeta._id,' @ ',index);
+          $scope.imagesMeta.splice(index, 1);
+        }
+      });
+    };
+    $scope.star = function (imageMeta, index) {
+      console.log(JSON.stringify(imageMeta));
+      $http.put('/api/images/'+imageMeta.metadata.main_id+'/'+imageMeta._id).success(function(response) {
+        //console.log(JSON.stringify(response));
+        if(response=='starred'){
+          console.log('starring:',imageMeta._id,' @ ',index);
+          $scope.imagesMeta[index].starred=true;
+        }
+      });
+    };
+    $scope.view = function (imageMeta) {
+      //'/images/'+imageMeta._id
+      var modalInstance = $modal.open({
+        templateUrl: 'myModalContent.html',
+        controller: 'ModalInstanceCtrl',
+        size: 'lg',
+        resolve: {
+          imageMeta: function () {
+            return imageMeta;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+      console.log('View: ',imageMeta.metadata.main_id);
+    };
+
 
     $scope.refresh();
   }])
-  .controller('ImageDetail', ['$scope','$http','$routeParams', function($scope,$http,$routeParams) {
-
-      $http.get('/api/images_metadata/'+$routeParams._id).success(function(response) {
-        $scope.image_metadata = response;
-        console.log('done loading image meta')
+  .controller('ModalInstanceCtrl', ['$scope','$http','$modalInstance','imageMeta', function($scope,$http,$modalInstance, imageMeta) {
+    $scope.imageMeta=imageMeta;
+    console.log(imageMeta);
+    $scope.ok = function () {
+      $modalInstance.close();
+    };
+    $scope.close = function () {
+      $modalInstance.dismiss('close');
+    };
+    $scope.remove = function (imageMeta, index) {
+      console.log(JSON.stringify(imageMeta));
+      $http.delete('/api/images/'+imageMeta.metadata.main_id+'/'+imageMeta._id).success(function(response) {
+        //console.log(JSON.stringify(response));
+        if(response=='deleted'){
+          console.log('removing:',imageMeta._id,' @ ',index);
+          $scope.close();
+        }
       });
-
-
+    };
   }]);
