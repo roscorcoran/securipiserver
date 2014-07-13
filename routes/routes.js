@@ -49,7 +49,7 @@ var im = require('imagemagick');
       res.redirect('/dashboard/images');
   });
 
-  app.get('/dashboard/images', /*userAuthenticated,*/ function(req, res) {
+  app.get('/dashboard/images', userAuthenticated, function(req, res) {
       console.log("GET images");
       res.render('images', {
         title: 'Images'
@@ -78,7 +78,7 @@ var im = require('imagemagick');
   });*/
 
 
-  app.get('/api/images_metadata', function(req, res) {
+  app.get('/api/images_metadata',userAuthenticated, function(req, res) {
     console.log("GET images api metadata");
     gfs.collection('thumb_store').find({}).toArray(
       function (err, imagesmeta) {
@@ -89,7 +89,7 @@ var im = require('imagemagick');
     });
   });
 
-  app.get('/api/images_metadata/:_id', function(req, res) {
+  app.get('/api/images_metadata/:_id', userAuthenticated, function(req, res) {
     console.log("GET images api metadata id");
     var tid = new ObjectID(req.param("_id"));
     gfs.collection('thumb_store').findOne({_id: tid},
@@ -122,7 +122,7 @@ var im = require('imagemagick');
     });
   });*/
 
-  app.get('/api/images/thumbnails/:_id', function(req, res) {
+  app.get('/api/images/thumbnails/:_id', userAuthenticated, function(req, res) {
       console.log("GET images thumb api by ID");
       var options = {
         mode: 'r',
@@ -144,7 +144,7 @@ var im = require('imagemagick');
         });
   });*/
 
-  app.get('/api/images/:_id', function(req, res) {
+  app.get('/api/images/:_id', userAuthenticated, function(req, res) {
       console.log("GET images api by ID");
       var options = {
         mode: 'r',
@@ -168,7 +168,7 @@ var im = require('imagemagick');
       res.send("saved in DB OK");
   });*/
 
-  app.post('/api/images', function(req, res) {
+  app.post('/api/images', userAuthenticated, function(req, res) {
       console.log("incomming post gridfs");
 
       var form = new multiparty.Form();
@@ -233,8 +233,7 @@ var im = require('imagemagick');
       });
   });
 
-  //Add thumb deletion
-  app.delete('/api/images/:main_id/:thumb_id', function(req, res) {
+  app.delete('/api/images/:main_id/:thumb_id', userAuthenticated, function(req, res) {
     console.log("DELETE images api");
     var options = {
       mode: 'w',
