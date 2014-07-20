@@ -1,7 +1,11 @@
 // app/routes/routes.js
 //Middleware function to test if user loggedin
 function userAuthenticated(req, res, next){
-    if(req.isAuthenticated()){
+  var override=false;
+    if(override){
+      next();
+    }
+    else if(req.isAuthenticated()){
         next();
     }else{
         res.redirect("/login");
@@ -41,18 +45,13 @@ var im = require('imagemagick');
 
   app.get('/', function(req, res) {
       console.log("incomming get");
-      res.redirect('/dashboard/images');
+      res.redirect('/dashboard');
   });
 
-  app.get('/dashboard', function(req, res) {
-      console.log("GET dash");
-      res.redirect('/dashboard/images');
-  });
-
-  app.get('/dashboard/images', userAuthenticated, function(req, res) {
-      console.log("GET images");
-      res.render('images', {
-        title: 'Images'
+  app.get('/dashboard', userAuthenticated, function(req, res) {
+      console.log("GET dashboard");
+      res.render('dashboard', {
+        title: 'Dashboard'
       });
   });
 //IMAGES API
@@ -168,7 +167,7 @@ var im = require('imagemagick');
       res.send("saved in DB OK");
   });*/
 
-  app.post('/api/images', userAuthenticated, function(req, res) {
+  app.post('/api/images', function(req, res) {
       console.log("incomming post gridfs");
 
       var form = new multiparty.Form();
@@ -251,18 +250,48 @@ var im = require('imagemagick');
       gfs.remove(options, function (err) {
         if (err) return handleError(err);
         console.log('thumb delete success');
-        res.writeHead(200, {'content-type': 'text/plain'});
         res.end('deleted');
       });
     });
   });
 
-  /*app.delete('/api/imagesold/:_id', function(req, res) {
-    console.log("DELETE images api");
-    Image.remove({_id: req.param("_id")}, function (err) {
-        if (err) {
-           return handleError(err);
-        }
-    });
-  });*/
+  //long polling
+  // a list of messages scrawled on the wall
+  var msgs = [];
+
+  // a list of deferred responses
+  var defered = {};
+
+  // /q[/<xxx>] query messages from the wall; may block for a protracted period
+  app.get('/api/control/:id', function(req, res){
+    var id = req.param("id");
+    res.contentType( 'text/plain' )
+    defered[id]={};
+    defered[id]=res;
+    console.log('q',id);
+  });
+
+  // /p?msg=<xxx> post a message to the wall
+  app.post('/api/control/:id', function( req, res ){
+
+    var id = req.param("id");
+    //var msg = req.param("msg");
+    var msg = req.body.data.msg;
+    //console.log(JSON.stringify(req.body));
+    //a message has arrived, notify all those who have deferred
+    console.log('p',id);
+    if(typeof(defered[id])!=='undefined' && typeof(defered[id].send)!=='undefined'){
+      //we have a listener and a message
+      //send current message and all saved messages
+      defered[id].send(msg);
+      res.send('sent');
+
+    }else{
+      //save the message in DB for when comes online
+      res.send('no listener');
+    }
+    // now purge the deferrals
+    defered[id] = {};
+  });
+
 };

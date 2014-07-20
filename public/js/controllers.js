@@ -4,6 +4,7 @@
 
 angular.module('myApp.controllers', [])
   .controller('ImageCtrl', ['$scope','$http','$location','$modal', function($scope,$http,$location,$modal) {
+    $scope.name='images';
     $scope.presets = [
       {name: 'Last 2 Hrs', mode:'realtime', range:[moment().subtract('hours', 2),moment()]},
       {name: 'Today', mode:'realtime', range:[moment().startOf('day'),moment().endOf('day')]},
@@ -106,4 +107,68 @@ angular.module('myApp.controllers', [])
         }
       });
     };
+  }])
+  .controller('DashCtrl', ['$scope','$http','$timeout','$location','$modal', function($scope,$http,$timeout,$location,$modal) {
+    $scope.name='dashboard';
+    $scope.sent=false;
+    $scope.sending=true;
+    $scope.noListener=false;
+    $scope.comsError=true;
+    $scope.logs=[];
+
+    $scope.ping = function () {
+      $scope.sending=true;
+      $http.post('/api/control/pi/',{data: { msg: 'ping'}})
+      .success(function(response) {
+        if(response=='sent'){
+          //$scope.logIt('sent: Ping','info');
+          $scope.sending=false;
+          $scope.noListener=false;
+          $scope.comsError=false;
+        } else if (response=='no listener'){
+          $scope.sending=false;
+          $scope.noListener=true;
+          $scope.comsError=true;
+          $scope.logIt('no listener','error');
+        }else{
+          $scope.sending=false;
+          $scope.comsError=true;
+          $scope.logIt('Unknown Response: '+response,'error');
+        }
+        $timeout($scope.ping, 10000);
+      }).
+      error(function(data, status, headers, config) {
+        $scope.sending=false;
+        $scope.comsError=true;
+        $scope.noListener=true;
+        $timeout($scope.ping, 1000);
+      });
+    };
+    $scope.ping();
+    $scope.sendMsg = function (msg) {
+      var msg=$scope.msg;
+      if(msg!==""){
+        $scope.sending=true;
+        $http.post('/api/control/pi/',{data: { msg: msg}})
+        .success(function(response) {
+          //console.log(JSON.stringify(response));
+          if(response=='sent'){
+            $scope.logIt('sent:'+msg,'info');
+            $scope.sent=true;
+            $scope.sending=false;
+            $scope.noListener=false;
+          } else if (response=='no listener'){
+            $scope.noListener=true;
+            $scope.sent=false;
+            $scope.sending=false;
+            $scope.comsError=true;
+            $scope.logIt('no listener','error');
+          }
+        });
+      };
+    };
+    $scope.logIt=function(log,type){
+      $scope.logs.push({ time: new Date(),type:type,log:log});
+    };
+    $scope.logIt('init','info');
   }]);

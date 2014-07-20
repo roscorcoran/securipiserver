@@ -1,0 +1,48 @@
+<h1 class="page-header">Management</h1>
+<div class="row">
+  <div class="col-md-4 col-sm-6">
+    <div class="input-group">
+      <span class="input-group-addon">Message</span>
+      <input ng-model="msg" type="text" class="form-control" placeholder="message">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="sendMsg()">Go!</button>
+      </span>
+    </div>
+  </div>
+  <div class="col-md-4 col-sm-6">
+    <div ng-show="comsError" class="alert alert-warning alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>Warning!</strong> Coms Error.
+    </div>
+    <div ng-show="!comsError" class="alert alert-success alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+      <strong>We have coms!</strong> Coms up.
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-4 col-sm-6">
+    <strong ng-show="sending">Wait!</strong>
+    <strong ng-show="!sending">OK</strong>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+<table class="table table-condensed">
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Type</th>
+          <th>Log</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="log in logs| orderBy:'time':true">
+          <td>{{log.time | date:'medium'}}</td>
+          <td>{{log.type}}</td>
+          <td>{{log.log}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -13,6 +13,6 @@ angular.module('myApp', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/images', {templateUrl: '../public/partials/images.html', controller: 'ImageCtrl'});
   $routeProvider.when('/images/:_id', {templateUrl: '../public/partials/imagedetail.html', controller: 'ImageDetail'});
-  $routeProvider.when('/view2', {templateUrl: '../public/partials/partial2.html', controller: 'MyCtrl2'});
+  $routeProvider.when('/dashboard', {templateUrl: '../public/partials/dashboard.html', controller: 'DashCtrl'});
   $routeProvider.otherwise({redirectTo: '/images'});
 }]);

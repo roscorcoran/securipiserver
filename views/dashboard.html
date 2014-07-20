@@ -5,8 +5,8 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="#/images">Gallery</a></li>
-        <li ><a href="#/management">Management</a></li>
+        <li ng-class="(name=='images'?'active':'')"><a href="#/images">Gallery</a></li>
+        <li ng-class="(name=='dashboard'?'active':'')"><a href="#/dashboard">Dashboard</a></li>
       </ul>
     </div>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">

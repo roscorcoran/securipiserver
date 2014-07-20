@@ -66,9 +66,9 @@
     </div>
 <h2 class="sub-header">Images</h2>
   <div class="row">
-    <div class="col-xs-12 col-sm-6 col-md-3 " ng-repeat="imageMeta in imagesMeta" >
+    <div class="col-xs-12 col-sm-6 col-md-3" ng-repeat="imageMeta in imagesMeta" >
 			<div class="img-overlay">
-      	<img class='img-responsive' alt='{{ imageMeta._id }}' ng-src='/api/images/thumbnails/{{ imageMeta._id }}'/>
+      	<img style="width:100%;" alt='{{ imageMeta._id }}' ng-src='/api/images/thumbnails/{{ imageMeta._id }}'/>
 				<div class="project-overlay btn-group-xs pull-right">
 					<button type="button" class="btn btn-xs" ng-click="star(imageMeta._id)"><span class="glyphicon glyphicon-star"></span></button>
 					<button type="button" class="btn btn-xs" ng-click="remove(imageMeta,$index)"><span class="glyphicon glyphicon-trash"></span></button>
