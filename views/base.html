@@ -28,8 +28,8 @@
       </div>
       <div class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/dashboard">Dashboard</a></li>
-          <li><a href="/dashboard/images">Images</a></li>
+          <li ng-class="(name=='images'?'active':'')"><a href="#/images">Gallery</a></li>
+          <li ng-class="(name=='dashboard'?'active':'')"><a href="#/dashboard">Dashboard</a></li>
           <li><a href="/login">Login</a></li>
           <li><a href="/logout">Logout</a></li>
           {#Add login/out here#}

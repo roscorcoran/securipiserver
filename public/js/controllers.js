@@ -108,7 +108,7 @@ angular.module('myApp.controllers', [])
       });
     };
   }])
-  .controller('DashCtrl', ['$scope','$http','$timeout','$location','$modal', function($scope,$http,$timeout,$location,$modal) {
+  .controller('DashCtrl', ['$scope','$http','$timeout','$location','$modal','$rootScope', function($scope,$http,$timeout,$location,$modal, $rootScope) {
     $scope.name='dashboard';
     $scope.sent=false;
     $scope.sending=true;
@@ -135,13 +135,13 @@ angular.module('myApp.controllers', [])
           $scope.comsError=true;
           $scope.logIt('Unknown Response: '+response,'error');
         }
-        $timeout($scope.ping, 10000);
+        $scope.pingp = $timeout($scope.ping, 10000);
       }).
       error(function(data, status, headers, config) {
         $scope.sending=false;
         $scope.comsError=true;
         $scope.noListener=true;
-        $timeout($scope.ping, 1000);
+        $scope.pingp = $timeout($scope.ping, 1000);
       });
     };
     $scope.ping();
@@ -171,4 +171,7 @@ angular.module('myApp.controllers', [])
       $scope.logs.push({ time: new Date(),type:type,log:log});
     };
     $scope.logIt('init','info');
+    $rootScope.$on("$locationChangeStart",function(){
+        $timeout.cancel($scope.pingp);
+    });
   }]);
